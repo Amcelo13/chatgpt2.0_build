@@ -1,9 +1,8 @@
-'use-client'
-import {signIn, useSession} from "next-auth/react"
+'use client'
+import {signIn} from "next-auth/react"
 import Image from "next/image"
 
 function Login() {
-  const { data: session } = useSession()
 
   return (
     <div className="bg-[#11A37F] h-screen flex flex-col
@@ -16,8 +15,7 @@ function Login() {
         />
         
         <button onClick={() =>signIn("google")}
-        className="text-white font-bold text-3xl 
-        animate-pulse ">
+        className="text-white font-bold text-3xl animate-pulse ">
           Sign In 
         </button>
 
