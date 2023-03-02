@@ -21,11 +21,12 @@ function NewChat() {
             userId : session?.user?.email!,
             createdAt: serverTimestamp()   //to store the global server time of database entry
         })
-        router.push(`/chat/${doc.id}`)   //and navigate and enter me to a new chat BY DYNAMIC ROUTING IN REALTIME
+        router.push(`/chat/${doc.id}`)   //and navigate me to a new chat BY DYNAMIC ROUTING IN REALTIME
+        // This will go to page.tsx in app/chat/id/page.tsx
   }
 
   return (
-    <div onClick={createNewChat} className="border-gray-700 border chatRow">
+    <div onClick={createNewChat} className="border-gray-700 border mb-2 chatRow">
         <PlusIcon className="h-4 w-4"/>
         <p>New Chat</p>
     </div>
