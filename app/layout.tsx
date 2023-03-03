@@ -4,7 +4,7 @@ import '../styles/globals.css'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../pages/api/auth/[...nextauth]'
 import Login from '../components/Login'
-
+import ClientProvider from '../components/ClientProvider'
 
 export default async function RootLayout({
   children,
@@ -28,8 +28,10 @@ export default async function RootLayout({
             </div>
    
    
-             {/* Client-Provider Notification */}
-   
+             {/* Client-Provider Notification */} 
+
+             {/* This is a client side component to show toaster icon in Next.js so we have to make the component named 'ClientProvider' as a client component and */}
+              <ClientProvider/>
            <div className="bg-[#343541] flex-1 h-full">{children}</div>
            </div>
           )}

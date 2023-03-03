@@ -5,6 +5,7 @@ import { addDoc, collection, Firestore, serverTimestamp } from "firebase/firesto
 import { useSession } from "next-auth/react"
 import { FormEvent, useState } from "react"
 import { db } from "../firebase"
+import {toast} from "react-hot-toast"
 
 type Props ={
     chatId:string
@@ -13,6 +14,10 @@ type Props ={
 function ChatInput({chatId}:Props) {
     const [prompt, setPrompt] = useState("")
     const {data:session} = useSession()
+
+    //useSWR to get the model
+    const model = "text-davinci-003"
+
     const sendMessage = async(e : FormEvent<HTMLFormElement>) =>{
         e.preventDefault
         if(!prompt) return  //to be defensive
@@ -20,6 +25,7 @@ function ChatInput({chatId}:Props) {
         const input = prompt.trim()   //to remove any whitespace at the end
         setPrompt("")  //empty after sending
         
+        // INPUT DATA
         const message: Message  = {
             text: input,
             createdAt: serverTimestamp(),
@@ -29,14 +35,29 @@ function ChatInput({chatId}:Props) {
                 avatar: session?.user?.image! || `https://ui=avatars.com/api/?name=${session?.user?.name}`,
             }
         }
-                // Sending the chat to add to Firestore 
+         // Sending the chat to add to Firestore 
                 await addDoc(collection(db, 'users', session?.user?.email!, 'chats' ,chatId ,'messages'), 
                 message
-                )
+                );
 
 
-            // React HOT TOAST ICON
+        // React HOT TOAST ICON TO SAY LOADING
+         const notification = toast.loading("ChatGPT is thinking...") 
 
+         
+                //Fetch method in backend that will communicate with open ai api
+            await fetch('api/askQuestion', {
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    prompt:input, chatId, model, session, 
+                })
+            }).then(()=>{
+                //Toast notification   to say Succesfull after sending the data to api and getting back the answer
+                toast.success("ChatGPT has responded!", {
+                    id:notification,
+                })
+            })
             
 
     }
