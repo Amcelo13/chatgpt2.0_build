@@ -24,7 +24,7 @@ function ChatRow({id}: Props) {
     //Setting the path of chat to be active onclicked
     useEffect(()=>{
         if(!pathname) return
-        else setActive(pathname.includes(id))
+        setActive(pathname.includes(id))
 
       },[pathname])
 

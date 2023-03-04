@@ -11,7 +11,7 @@ const query = async (prompt:string, chatId:string, model:string) =>{
         frequency_penalty: 0,
         presence_penalty:0,
     }).then(res => res.data.choices[0].text)  //Giving back only the first response by AI
-    .catch((err)=>`ChatGPT was unable to to find the answer for that! (Error:${err.message})`
+    .catch((err)=>console.log(`ChatGPT was unable to to find the answer for that! (Error:${err.message})`)
     )
     return res
 }

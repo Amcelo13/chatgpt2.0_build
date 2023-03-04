@@ -16,33 +16,29 @@ export default  async function handler(
     const { prompt, chatId, model, session} = req.body;
 
     if(!prompt){
-        res.status(400).json({answer: "Please provide a prompt"})
+        res.status(400).json({answer: "Please provide a Prompt"})
         return; 
     }
     if(!chatId){
-        res.status(400).json({answer: "Please provide a chatId"})
+        res.status(400).json({answer: "Please provide a ChatId"})
         return; 
     }
 
     // CHATGPT QUERY STARTS of response by sending the query to ../../lib/queryAPI
-    const response = await query(prompt, chatId, model)
-
-    const message:Message = {
-        text: response || "ChatGPT was unable to find an answer for that!",
+    const response = await query(prompt, chatId, model || 'text-davinci-003');
+    // console.log('res', response);
+    const message: Message = {
+        text: response || "ChatGPT was unable to find an answer for that",
         createdAt: admin.firestore.Timestamp.now(),
-        user:{
-            _id:'ChatGPT',
-            name:'ChatGPT',
-            avatar :"https://links.papareact.com/89k"
+        user: {
+            _id: 'ChatGPT',
+            name: 'ChatGPT',
+            avatar:'https://links.papareact.com/89k'
         }
     }
 
     //Now w'have got the response now we send the response to adminDb
-    await adminDb.collection('users').doc(session?.user?.email)
-    .collection('chats')
-    .doc(chatId)
-    .collection('messages')
-    .add(message)
+    await adminDb.collection('users').doc(session?.user?.email).collection("chats").doc(chatId).collection("messages").add(message)
 
     //Sending back the response FINALLY
   res.status(200).json({ answer: message.text })

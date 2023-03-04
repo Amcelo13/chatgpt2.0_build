@@ -1,11 +1,10 @@
 'use client'
-import { async } from "@firebase/util"
-import { PaperAirplaneIcon, UserCircleIcon } from "@heroicons/react/24/outline"
-import { addDoc, collection, Firestore, serverTimestamp } from "firebase/firestore"
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline"
+import { addDoc, collection,  serverTimestamp } from "firebase/firestore"
 import { useSession } from "next-auth/react"
-import { FormEvent, useState } from "react"
+import React,{ FormEvent, useState } from "react"
 import { db } from "../firebase"
-import {toast} from "react-hot-toast"
+import { toast } from 'react-hot-toast';
 
 type Props ={
     chatId:string
@@ -18,21 +17,21 @@ function ChatInput({chatId}:Props) {
     //useSWR to get the model
     const model = "text-davinci-003"
 
-    const sendMessage = async(e : FormEvent<HTMLFormElement>) =>{
-        e.preventDefault
+    const sendMessage = async(e : (FormEvent<HTMLFormElement>)) =>{
+        e.preventDefault()
         if(!prompt) return  //to be defensive
 
         const input = prompt.trim()   //to remove any whitespace at the end
-        setPrompt("")  //empty after sending
+        setPrompt('')  //empty after sending
         
         // INPUT DATA
-        const message: Message  = {
+        const message = {
             text: input,
             createdAt: serverTimestamp(),
             user :{
                 _id :session?.user?.email!,
-                name: session?.user?.name!,
-                avatar: session?.user?.image! || `https://ui=avatars.com/api/?name=${session?.user?.name}`,
+                name: session?.user?.name,
+                avatar: session?.user?.image|| `https://ui=avatars.com/api/?name=${session?.user?.name}`,
             }
         }
          // Sending the chat to add to Firestore 
@@ -42,22 +41,22 @@ function ChatInput({chatId}:Props) {
 
 
         // React HOT TOAST ICON TO SAY LOADING
-         const notification = toast.loading("ChatGPT is thinking...") 
+         const notification = toast.loading('ChatGPT is thinking...') 
 
          
                 //Fetch method in backend that will communicate with open ai api
-            await fetch('api/askQuestion', {
+            await fetch('/api/askQuestion', {
                 method:'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     prompt:input, chatId, model, session, 
                 })
-            }).then(()=>{
+            }).then((res)=>{
                 //Toast notification   to say Succesfull after sending the data to api and getting back the answer
-                toast.success("ChatGPT has responded!", {
-                    id:notification,
+                toast.success('ChatGPT has responded!', {
+                    id: notification
                 })
-            })
+            }).catch(error => console.log('e', error))
             
 
     }
