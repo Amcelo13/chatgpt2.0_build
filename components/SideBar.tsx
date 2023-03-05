@@ -6,6 +6,7 @@ import { collection, query, orderBy} from 'firebase/firestore'
 import { db } from '../firebase'
 import {useCollection} from 'react-firebase-hooks/firestore'
 import ChatRow from './ChatRow'
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline'
 
 function SideBar() {
   const { data: session } = useSession();
@@ -48,7 +49,8 @@ function SideBar() {
             alt="Profile Pic"
             className="h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50"
           />
-          <p className="mr-20 text-white cursor-pointer hover:text-[#babbbf]" onClick={()=>signOut()}>SignOut</p>
+          <ArrowRightOnRectangleIcon className='h-5 w-5 text-white mr-2 hover:text-[#babbbf] '/>
+          <p className="mr-20 text-white cursor-pointer hover:text-[#babbbf]" onClick={()=>signOut()}>Log Out</p>
         </div>
       )}
 
