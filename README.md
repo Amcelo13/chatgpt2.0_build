@@ -114,7 +114,7 @@ It has :
   </table>
 
 <br />
-Deployed using Vercel CLI continuous deployment linked with its github rep
+Deployed using Vercel CLI continuous deployment linked with its github repo <br/>
 Made with Interest and passion ....😀
 
 
