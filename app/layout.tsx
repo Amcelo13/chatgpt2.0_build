@@ -22,7 +22,7 @@ export default async function RootLayout({
               {/* Conditional Rendering of login session  */}
           {!session ? (<Login/>):(
             <div className='flex'>
-            <div className='bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]'>
+            <div className='bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[18rem]'>
               {/* SideBar */}
               <SideBar/>
             </div>
