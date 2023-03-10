@@ -27,7 +27,8 @@ pnpm create next-app --example with-tailwindcss with-tailwindcss-app
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
 
 # ChatGPT Build
-ChatGPT is a full working ChatGPT clone with Google Authentication made with Next.js, Firebase and OpenAI API
+ChatGPT is a full working ChatGPT clone with Google Authentication made with Next.js, Firebase and OpenAI API.
+The API endpoint allows users to make requests to the OpenAl API for various natural language processing tasks
 
 
 <br />
